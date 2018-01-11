@@ -21,6 +21,7 @@ namespace UpdateProduct
         SqlCommand cmd;
         DataTable table = new DataTable();
         BindingSource bs = new BindingSource();
+        MyFunction MyFunc = new MyFunction();
         int okey = 0;
         private void btnGetUserPass_Click(object sender, EventArgs e)
         {
@@ -116,27 +117,55 @@ namespace UpdateProduct
             Decimal c = Convert.ToDecimal(MYdataGrid.CurrentRow.Cells[5].Value);
         }
 
-    
+        public void CompareData(int shka)
+        {
+            cmd = new SqlCommand("select TOP 1 * from inventory where shka=" + shka + "", cnn);
+            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            adapter.Fill(ds, "ka_act");
+            MessageBox.Show(ds.Tables["ka_act"].Rows[0]["mohvah"].ToString());
+            MessageBox.Show(ds.Tables["ka_act"].Rows[0]["mojkavah"].ToString());
+            MessageBox.Show(ds.Tables["ka_act"].Rows[0]["mojkajoz"].ToString());
+            MessageBox.Show(ds.Tables["ka_act"].Rows[0]["buy_price"].ToString());
+
+            //foreach (SqlDataReader column in )
+            //    dt.Columns.Add(column.Name, typeof(string));
+            //dt.Columns.Add("mohvah", typeof(int));
+            //dt.Columns.Add("mojkavah", typeof(string));
+            //dt.Columns.Add("mojkajoz", typeof(string));
+            //dt.Columns.Add("buy_price", typeof(string));
+
+            //while (da.Read())
+            //{
+            //    DataRow dr1 = dt.NewRow();
+            //    dr1[0] = da.GetInt32(da.GetOrdinal("mohvah"));
+            //    dr1[1] = da.GetDecimal(da.GetOrdinal("mojkavah"));
+            //    dr1[2] = da.GetInt32(da.GetOrdinal("mojkajoz"));
+            //    dr1[3] = da.GetDecimal(da.GetOrdinal("buy_price"));
+            //    dt.Rows.Add(dr1);
+            //    MessageBox.Show(dr1[0].ToString());
+
+            //}
+        }
         private void btnDone_Click(object sender, EventArgs e)
         {
-           
+
             for (int i = 0; i < MYdataGrid.Rows.Count; i++)
             {
-
-                MyFunction MyFunc = new MyFunction();
                 cnn = new SqlConnection(MyFunc.stringconnect());
                 cnn.Open();
                 int shka = int.Parse(MYdataGrid.Rows[i].Cells[1].Value.ToString());
                 string naka = MYdataGrid.Rows[i].Cells[2].Value.ToString();
+                bool canchange = false;
 
                 int mohvah = int.Parse(MYdataGrid.Rows[i].Cells[4].Value.ToString());
                 decimal mojkavah = decimal.Parse(MYdataGrid.Rows[i].Cells[5].Value.ToString());
                 int mojkajoz = int.Parse(MYdataGrid.Rows[i].Cells[6].Value.ToString());
                 decimal pure_buy_price = decimal.Parse(MYdataGrid.Rows[i].Cells[7].Value.ToString());
-                cmd = new SqlCommand("SELECT TOP 1 * FROM ka_act  where shka="+shka+" and act_id>1 ORDER BY rdf DESC", cnn);
-
+                cmd = new SqlCommand("SELECT TOP 1 * FROM ka_act  where shka=" + shka + " and act_id>1 ORDER BY rdf DESC", cnn);
+                CompareData(shka);
                 //int count =int.Parse(cmd.ExecuteScalar().ToString());
-                if (cmd.ExecuteScalar()==null)
+                if (cmd.ExecuteScalar() == null)
                 {
                     string query = "update inventory set mohvah =" + mohvah +
                         ", mojkavah = " + mojkavah + ",mojkajoz=" + mojkajoz + ",pure_buy_price=" + pure_buy_price +
@@ -145,21 +174,21 @@ namespace UpdateProduct
                     string query2 = "update ka_act set tedvah = " + mojkavah + ",tedjoz=" + mojkajoz +
                         ",price=" + pure_buy_price +
                          ",invepgh=" + pure_buy_price + ",invep=" + pure_buy_price + "where shka = " + shka + "";
-                    string query3 = "update inventory_anbars set mojkavah = " + mojkavah + ",mojkajoz=" + mojkajoz +" where shka = " + shka + "";
-                             string query4 = "update anbars_act set tedvah = " + mojkavah + ",tedjoz=" + mojkajoz + ",price=" + pure_buy_price +
-                        ",invepgh=" + pure_buy_price + ",invep=" + pure_buy_price + " where shka = " + shka + "";
+                    string query3 = "update inventory_anbars set mojkavah = " + mojkavah + ",mojkajoz=" + mojkajoz + " where shka = " + shka + "";
+                    string query4 = "update anbars_act set tedvah = " + mojkavah + ",tedjoz=" + mojkajoz + ",price=" + pure_buy_price +
+               ",invepgh=" + pure_buy_price + ",invep=" + pure_buy_price + " where shka = " + shka + "";
                     cmd = new SqlCommand(query, cnn);
                     cmd.ExecuteNonQuery();
                     cmd = new SqlCommand(query2, cnn);
                     cmd.ExecuteNonQuery();
                     cmd = new SqlCommand(query3, cnn);
-                    cmd.ExecuteNonQuery(); 
+                    cmd.ExecuteNonQuery();
                     cmd = new SqlCommand(query4, cnn);
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("كالاي  " + naka + " تغيير كرد");
                 }
                 cnn.Close();
-               
+
             }
             MessageBox.Show("تغييرات انجام شد");
         }
