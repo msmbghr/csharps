@@ -221,7 +221,7 @@ namespace UpdateProduct
 
             }
             checkSatateConnection(0);
-            MessageBox.Show("كالاهاي***** "+nakaOk.ToString()+"*****تغيير كردند و \n"+" "+ "كالاهاي*****" + nakanoneChange+"*****هيچ تغييري نكردند و \n"+" "+ "كالاهاي "+nakacancel +"به دليل داشتن عمليات در آتيران هيج تغييري نكردن");
+            MessageBox.Show("كالاهاي***** "+nakaOk.ToString()+"*****تغيير كردند و \n"+" "+ "كالاهاي*****" + nakanoneChange+"*****هيچ تغييري نكردند و \n"+" "+ "كالاهاي***** " + nakacancel + "*****به دليل داشتن عمليات در آتيران هيج تغييري نكردند");
 
         }
 
