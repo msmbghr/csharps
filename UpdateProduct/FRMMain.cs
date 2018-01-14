@@ -10,13 +10,7 @@ using System.Windows.Forms;
 
 namespace UpdateProduct
 {
-    public class Inventory
-    {
-        public int mohvah { get; set; }
-        public decimal mojkavah { get; set; }
-        public int mojkajoz { get; set; }
-        public decimal pure_buy_price { get; set; }
-    }
+    
     public partial class FRMMain : Form
     {
         public FRMMain()
@@ -120,7 +114,6 @@ namespace UpdateProduct
         private void MYdataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             btnDone.Enabled = true;
-            btnDoneComplete.Enabled = true;
             Decimal c = Convert.ToDecimal(MYdataGrid.CurrentRow.Cells[5].Value);
         }
 
@@ -209,14 +202,15 @@ namespace UpdateProduct
                     }
                     else
                     {
-                        nakanoneChange.Append(naka+" ");
+                        //nakanoneChange.Append(naka+" ");
                     }
                     #endregion
 
                 }
                 else
                 {
-                    nakacancel.Append(naka + " ");
+                    if (CompareData(shka, mohvah, mojkavah, mojkajoz, pure_buy_price))
+                         nakacancel.Append(naka + " ");
                 }
 
             }
@@ -267,5 +261,22 @@ namespace UpdateProduct
             Decimal c2 = c1 * (Decimal)(Convert.ToDecimal(MYdataGrid.CurrentRow.Cells[7].Value));
             MYdataGrid.CurrentRow.Cells[0].Value = c2;
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            //cmd = new SqlCommand("SELECT TOP 1 * FROM ka_act  where act_id>1 ORDER BY rdf DESC", cnn);
+            ////CompareData(shka);
+            ////int count =int.Parse(cmd.ExecuteScalar().ToString());
+            //if (cmd.ExecuteScalar() == null)
+            //{
+            //}
+        }
+    }
+    public class Inventory
+    {
+        public int mohvah { get; set; }
+        public decimal mojkavah { get; set; }
+        public int mojkajoz { get; set; }
+        public decimal pure_buy_price { get; set; }
     }
 }
