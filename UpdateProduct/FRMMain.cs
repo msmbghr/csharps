@@ -43,7 +43,7 @@ namespace UpdateProduct
         {
             MyFunction MyFunc = new MyFunction();
             cnn = new SqlConnection(MyFunc.stringconnect());
-            cnn.Open();
+            checkSatateConnection(1);
             cmd = new SqlCommand("select group_rdf,group_name from kagroup", cnn);
             SqlDataReader da = cmd.ExecuteReader();
             DataTable dt = new DataTable();
@@ -77,12 +77,12 @@ namespace UpdateProduct
                 MYdataGrid.DataSource = table;
                 MyFunction MyFunc = new MyFunction();
                 cnn = new SqlConnection(MyFunc.stringconnect());
-                cnn.Open();
+                checkSatateConnection(1);
                 cmd = new SqlCommand("select shka,naka,vahsanj,mohvah,mojkavah,mojkajoz,buyjoz from inventory where group_rdf=" + comboBox1.SelectedValue + "", cnn);
                 SqlDataAdapter adabter = new SqlDataAdapter(cmd);
                 adabter.Fill(table);
                 bs.DataSource = table;
-                cnn.Close();
+                checkSatateConnection(0);
                 MYdataGrid.DataSource = table;
                 for (int i = 0; i < MYdataGrid.Rows.Count; i++)
                 {
@@ -117,9 +117,10 @@ namespace UpdateProduct
             Decimal c = Convert.ToDecimal(MYdataGrid.CurrentRow.Cells[5].Value);
         }
 
-        public void CompareData(int shka)
+        public void CompareData(int shka, SqlCommand cmd, int mohvah, decimal mojkavah, int mojkajoz, decimal pure_buy_price)
         {
-            cmd = new SqlCommand("select TOP 1 * from inventory where shka=" + shka + "", cnn);
+            cmd = new SqlCommand("SELECT  mohvah,mojkavah,mojkajoz,buy_price FROM ka_act  where shka=" + shka + " and act_id>1 ORDER BY rdf DESC", cnn);
+
             SqlDataAdapter adapter = new SqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             adapter.Fill(ds, "ka_act");
@@ -147,13 +148,27 @@ namespace UpdateProduct
 
             //}
         }
+        public void checkSatateConnection(int ol)
+        {
+            switch (ol)
+            {
+                case 1:
+                    if (cnn != null && cnn.State == ConnectionState.Closed)
+                        cnn.Open();
+                    break;
+                case 0:
+                    if (cnn != null && cnn.State == ConnectionState.Open)
+                        cnn.Close();
+                    break;
+            }
+        }
         private void btnDone_Click(object sender, EventArgs e)
         {
 
             for (int i = 0; i < MYdataGrid.Rows.Count; i++)
             {
                 cnn = new SqlConnection(MyFunc.stringconnect());
-                cnn.Open();
+                checkSatateConnection(1);
                 int shka = int.Parse(MYdataGrid.Rows[i].Cells[1].Value.ToString());
                 string naka = MYdataGrid.Rows[i].Cells[2].Value.ToString();
                 bool canchange = false;
@@ -163,7 +178,7 @@ namespace UpdateProduct
                 int mojkajoz = int.Parse(MYdataGrid.Rows[i].Cells[6].Value.ToString());
                 decimal pure_buy_price = decimal.Parse(MYdataGrid.Rows[i].Cells[7].Value.ToString());
                 cmd = new SqlCommand("SELECT TOP 1 * FROM ka_act  where shka=" + shka + " and act_id>1 ORDER BY rdf DESC", cnn);
-                CompareData(shka);
+                //CompareData(shka);
                 //int count =int.Parse(cmd.ExecuteScalar().ToString());
                 if (cmd.ExecuteScalar() == null)
                 {
@@ -187,7 +202,7 @@ namespace UpdateProduct
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("كالاي  " + naka + " تغيير كرد");
                 }
-                cnn.Close();
+                checkSatateConnection(0);
 
             }
             MessageBox.Show("تغييرات انجام شد");
