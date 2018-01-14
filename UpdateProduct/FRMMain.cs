@@ -130,7 +130,7 @@ namespace UpdateProduct
 
             //foreach (SqlDataReader column in )
             //    dt.Columns.Add(column.Name, typeof(string));
-            //dt.Columns.Add("mohvah", typeof(int));
+            //dt.Columns.Add("mohvah", typeof(int)); 
             //dt.Columns.Add("mojkavah", typeof(string));
             //dt.Columns.Add("mojkajoz", typeof(string));
             //dt.Columns.Add("buy_price", typeof(string));
