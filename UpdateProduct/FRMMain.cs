@@ -17,7 +17,7 @@ namespace UpdateProduct
         {
             InitializeComponent();
         }
-
+        int countWork=0;
         SqlConnection cnn;
         SqlCommand cmd;
         DataTable table = new DataTable();
@@ -157,66 +157,9 @@ namespace UpdateProduct
         }
         private void btnDone_Click(object sender, EventArgs e)
         {
-            System.Text.StringBuilder nakaOk = new System.Text.StringBuilder();
-            System.Text.StringBuilder nakacancel = new System.Text.StringBuilder();
-            System.Text.StringBuilder nakanoneChange = new System.Text.StringBuilder();
-            int boolInt =0;
-            cnn = new SqlConnection(MyFunc.stringconnect());
-            checkSatateConnection(1);
-            for (int i = 0; i < MYdataGrid.Rows.Count; i++)
-            {
-                int shka = int.Parse(MYdataGrid.Rows[i].Cells[1].Value.ToString());
-                string naka = MYdataGrid.Rows[i].Cells[2].Value.ToString();
-                int mohvah = int.Parse(MYdataGrid.Rows[i].Cells[4].Value.ToString());
-                decimal mojkavah = decimal.Parse(MYdataGrid.Rows[i].Cells[5].Value.ToString());
-                int mojkajoz = int.Parse(MYdataGrid.Rows[i].Cells[6].Value.ToString());
-                decimal pure_buy_price = decimal.Parse(MYdataGrid.Rows[i].Cells[7].Value.ToString());
-                cmd = new SqlCommand("SELECT TOP 1 * FROM ka_act  where shka=" + shka + " and act_id>1 ORDER BY rdf DESC", cnn);
-                //CompareData(shka);
-                //int count =int.Parse(cmd.ExecuteScalar().ToString());
-                if (cmd.ExecuteScalar() == null )
-                {
-                    #region IFOK
+            backGUpdateGoods.RunWorkerAsync();
 
-                    if (CompareData(shka, mohvah, mojkavah, mojkajoz, pure_buy_price))
-                    {
-                        string query = "update inventory set mohvah =" + mohvah +
-                        ", mojkavah = " + mojkavah + ",mojkajoz=" + mojkajoz + ",pure_buy_price=" + pure_buy_price +
-                        ",buy_price=" + pure_buy_price + ",inventory_price=" + pure_buy_price +
-                        ",buyjoz=" + pure_buy_price + " where shka=" + shka + "";
-                        string query2 = "update ka_act set tedvah = " + mojkavah + ",tedjoz=" + mojkajoz +
-                            ",price=" + pure_buy_price +
-                             ",invepgh=" + pure_buy_price + ",invep=" + pure_buy_price + "where shka = " + shka + "";
-                        string query3 = "update inventory_anbars set mojkavah = " + mojkavah + ",mojkajoz=" + mojkajoz + " where shka = " + shka + "";
-                        string query4 = "update anbars_act set tedvah = " + mojkavah + ",tedjoz=" + mojkajoz + ",price=" + pure_buy_price +
-                   ",invepgh=" + pure_buy_price + ",invep=" + pure_buy_price + " where shka = " + shka + "";
-                        cmd = new SqlCommand(query, cnn);
-                        cmd.ExecuteNonQuery();
-                        cmd = new SqlCommand(query2, cnn);
-                        cmd.ExecuteNonQuery();
-                        cmd = new SqlCommand(query3, cnn);
-                        cmd.ExecuteNonQuery();
-                        cmd = new SqlCommand(query4, cnn);
-                        cmd.ExecuteNonQuery();
-                        nakaOk.Append(naka + " ");
-                    }
-                    else
-                    {
-                        //nakanoneChange.Append(naka+" ");
-                    }
-                    #endregion
-
-                }
-                else
-                {
-                    if (CompareData(shka, mohvah, mojkavah, mojkajoz, pure_buy_price))
-                         nakacancel.Append(naka + " ");
-                }
-
-            }
-            checkSatateConnection(0);
-            MessageBox.Show("كالاهاي***** "+nakaOk.ToString()+"*****تغيير كردند و \n"+" "+ "كالاهاي*****" + nakanoneChange+"*****هيچ تغييري نكردند و \n"+" "+ "كالاهاي***** " + nakacancel + "*****به دليل داشتن عمليات در آتيران هيج تغييري نكردند");
-
+            
         }
 
         private void btnDoneComplete_Click(object sender, EventArgs e)
@@ -270,6 +213,92 @@ namespace UpdateProduct
             //if (cmd.ExecuteScalar() == null)
             //{
             //}
+        }
+
+        private void backGUpdateGoods_DoWork(object sender, DoWorkEventArgs e)
+        {
+            System.Text.StringBuilder nakaOk = new System.Text.StringBuilder();
+            System.Text.StringBuilder nakacancel = new System.Text.StringBuilder();
+            System.Text.StringBuilder nakanoneChange = new System.Text.StringBuilder();
+            int boolInt = 0;
+            cnn = new SqlConnection(MyFunc.stringconnect());
+            checkSatateConnection(1);
+            for (int i = 0; i < MYdataGrid.Rows.Count; i++)
+            {
+                int shka = int.Parse(MYdataGrid.Rows[i].Cells[1].Value.ToString());
+                string naka = MYdataGrid.Rows[i].Cells[2].Value.ToString();
+                int mohvah = int.Parse(MYdataGrid.Rows[i].Cells[4].Value.ToString());
+                decimal mojkavah = decimal.Parse(MYdataGrid.Rows[i].Cells[5].Value.ToString());
+                int mojkajoz = int.Parse(MYdataGrid.Rows[i].Cells[6].Value.ToString());
+                decimal pure_buy_price = decimal.Parse(MYdataGrid.Rows[i].Cells[7].Value.ToString());
+                cmd = new SqlCommand("SELECT TOP 1 * FROM ka_act  where shka=" + shka + " and act_id>1 ORDER BY rdf DESC", cnn);
+                //CompareData(shka);
+                timerDot.Enabled = true;
+                //int count =int.Parse(cmd.ExecuteScalar().ToString());
+                if (cmd.ExecuteScalar() == null)
+                {
+                    #region IFOK
+
+                    if (CompareData(shka, mohvah, mojkavah, mojkajoz, pure_buy_price))
+                    {
+                        string query = "update inventory set mohvah =" + mohvah +
+                        ", mojkavah = " + mojkavah + ",mojkajoz=" + mojkajoz + ",pure_buy_price=" + pure_buy_price +
+                        ",buy_price=" + pure_buy_price + ",inventory_price=" + pure_buy_price +
+                        ",buyjoz=" + pure_buy_price + " where shka=" + shka + "";
+                        string query2 = "update ka_act set tedvah = " + mojkavah + ",tedjoz=" + mojkajoz +
+                            ",price=" + pure_buy_price +
+                             ",invepgh=" + pure_buy_price + ",invep=" + pure_buy_price + "where shka = " + shka + "";
+                        string query3 = "update inventory_anbars set mojkavah = " + mojkavah + ",mojkajoz=" + mojkajoz + " where shka = " + shka + "";
+                        string query4 = "update anbars_act set tedvah = " + mojkavah + ",tedjoz=" + mojkajoz + ",price=" + pure_buy_price +
+                   ",invepgh=" + pure_buy_price + ",invep=" + pure_buy_price + " where shka = " + shka + "";
+                        cmd = new SqlCommand(query, cnn);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCommand(query2, cnn);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCommand(query3, cnn);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCommand(query4, cnn);
+                        cmd.ExecuteNonQuery();
+                        nakaOk.Append(naka + " ");
+                    }
+                    else
+                    {
+                        //nakanoneChange.Append(naka+" ");
+                    }
+                    #endregion
+
+                }
+                else
+                {
+                    if (CompareData(shka, mohvah, mojkavah, mojkajoz, pure_buy_price))
+                        nakacancel.Append(naka + " ");
+                }
+
+            }
+            checkSatateConnection(0);
+            MessageBox.Show("كالاهاي***** " + nakaOk.ToString() + "*****تغيير كردند و \n" + " " + "كالاهاي*****" + nakanoneChange + "*****هيچ تغييري نكردند و \n" + " " + "كالاهاي***** " + nakacancel + "*****به دليل داشتن عمليات در آتيران هيج تغييري نكردند");
+
+        }
+
+        private void backGUpdateGoods_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+        }
+
+        private void timerDot_Tick(object sender, EventArgs e)
+        {
+            countWork += 1;
+            if (countWork >= 100)
+            {
+                timerDot.Enabled = false;
+                timerDot.Stop();
+            }
+            //OTHERWISE
+            pBarDo.Value = countWork;
+        }
+
+        private void backGUpdateGoods_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            pBarDo.Text = e.ProgressPercentage.ToString() + " %";
         }
     }
     public class Inventory

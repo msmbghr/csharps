@@ -28,16 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle40 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle34 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle35 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle36 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle37 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle38 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle39 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.panel4 = new System.Windows.Forms.Panel();
@@ -55,6 +56,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnDone = new System.Windows.Forms.Button();
+            this.backGUpdateGoods = new System.ComponentModel.BackgroundWorker();
+            this.panel5 = new System.Windows.Forms.Panel();
             this.MYdataGrid = new System.Windows.Forms.DataGridView();
             this.Col1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Col2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -64,10 +67,13 @@
             this.Col6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Col7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Col8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pBarDo = new System.Windows.Forms.ProgressBar();
+            this.timerDot = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MYdataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -264,18 +270,33 @@
             this.btnDone.Click += new System.EventHandler(this.btnDone_Click);
             this.btnDone.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnDone_KeyDown);
             // 
+            // backGUpdateGoods
+            // 
+            this.backGUpdateGoods.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backGUpdateGoods_DoWork);
+            this.backGUpdateGoods.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backGUpdateGoods_ProgressChanged);
+            this.backGUpdateGoods.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backGUpdateGoods_RunWorkerCompleted);
+            // 
+            // panel5
+            // 
+            this.panel5.Controls.Add(this.pBarDo);
+            this.panel5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel5.Location = new System.Drawing.Point(0, 585);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(1042, 33);
+            this.panel5.TabIndex = 1;
+            // 
             // MYdataGrid
             // 
             this.MYdataGrid.AllowUserToAddRows = false;
             this.MYdataGrid.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.MYdataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle31.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle31.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle31.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            dataGridViewCellStyle31.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle31.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle31.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle31.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.MYdataGrid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle31;
             this.MYdataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.MYdataGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Col1,
@@ -286,31 +307,26 @@
             this.Col6,
             this.Col7,
             this.Col8});
-            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            dataGridViewCellStyle20.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.MYdataGrid.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle40.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle40.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle40.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            dataGridViewCellStyle40.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle40.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle40.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle40.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.MYdataGrid.DefaultCellStyle = dataGridViewCellStyle40;
             this.MYdataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             this.MYdataGrid.Location = new System.Drawing.Point(0, 150);
             this.MYdataGrid.Name = "MYdataGrid";
             this.MYdataGrid.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.MYdataGrid.Size = new System.Drawing.Size(1042, 468);
-            this.MYdataGrid.TabIndex = 1;
-            this.MYdataGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MYdataGrid_CellClick);
-            this.MYdataGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MYdataGrid_CellContentClick);
-            this.MYdataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.MYdataGrid_CellEndEdit);
-            this.MYdataGrid.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.MYdataGrid_CellEnter);
-            this.MYdataGrid.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnDone_KeyDown);
+            this.MYdataGrid.Size = new System.Drawing.Size(1042, 435);
+            this.MYdataGrid.TabIndex = 2;
             // 
             // Col1
             // 
             this.Col1.DataPropertyName = "shka";
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("B Yekan", 11.25F);
-            this.Col1.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("B Yekan", 11.25F);
+            this.Col1.DefaultCellStyle = dataGridViewCellStyle32;
             this.Col1.HeaderText = "رديف";
             this.Col1.Name = "Col1";
             this.Col1.ReadOnly = true;
@@ -320,8 +336,8 @@
             // 
             this.Col2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.Col2.DataPropertyName = "naka";
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("B Yekan", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.Col2.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle33.Font = new System.Drawing.Font("B Yekan", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.Col2.DefaultCellStyle = dataGridViewCellStyle33;
             this.Col2.HeaderText = "نام كالا";
             this.Col2.Name = "Col2";
             this.Col2.ReadOnly = true;
@@ -329,8 +345,8 @@
             // Col3
             // 
             this.Col3.DataPropertyName = "vahsanj";
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("B Yekan", 11.25F);
-            this.Col3.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle34.Font = new System.Drawing.Font("B Yekan", 11.25F);
+            this.Col3.DefaultCellStyle = dataGridViewCellStyle34;
             this.Col3.HeaderText = "واحد";
             this.Col3.Name = "Col3";
             this.Col3.ReadOnly = true;
@@ -339,9 +355,9 @@
             // Col4
             // 
             this.Col4.DataPropertyName = "mohvah";
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("B Yekan", 11.25F);
-            this.Col4.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle35.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle35.Font = new System.Drawing.Font("B Yekan", 11.25F);
+            this.Col4.DefaultCellStyle = dataGridViewCellStyle35;
             this.Col4.HeaderText = "جزء در واحد";
             this.Col4.Name = "Col4";
             this.Col4.Width = 50;
@@ -349,11 +365,11 @@
             // Col5
             // 
             this.Col5.DataPropertyName = "mojkavah";
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("B Yekan", 11.25F);
-            dataGridViewCellStyle16.Format = "N0";
-            dataGridViewCellStyle16.NullValue = null;
-            this.Col5.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle36.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle36.Font = new System.Drawing.Font("B Yekan", 11.25F);
+            dataGridViewCellStyle36.Format = "N0";
+            dataGridViewCellStyle36.NullValue = null;
+            this.Col5.DefaultCellStyle = dataGridViewCellStyle36;
             this.Col5.HeaderText = "موجودي واحد";
             this.Col5.Name = "Col5";
             this.Col5.Width = 70;
@@ -361,9 +377,9 @@
             // Col6
             // 
             this.Col6.DataPropertyName = "mojkajoz";
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("B Yekan", 11.25F);
-            this.Col6.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle37.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle37.Font = new System.Drawing.Font("B Yekan", 11.25F);
+            this.Col6.DefaultCellStyle = dataGridViewCellStyle37;
             this.Col6.HeaderText = "موجودي جزء";
             this.Col6.Name = "Col6";
             this.Col6.Width = 60;
@@ -371,24 +387,37 @@
             // Col7
             // 
             this.Col7.DataPropertyName = "buyjoz";
-            dataGridViewCellStyle18.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("B Yekan", 11.25F);
-            dataGridViewCellStyle18.Format = "N0";
-            dataGridViewCellStyle18.NullValue = null;
-            this.Col7.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle38.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            dataGridViewCellStyle38.Font = new System.Drawing.Font("B Yekan", 11.25F);
+            dataGridViewCellStyle38.Format = "N0";
+            dataGridViewCellStyle38.NullValue = null;
+            this.Col7.DefaultCellStyle = dataGridViewCellStyle38;
             this.Col7.HeaderText = "قيمت خريد";
             this.Col7.Name = "Col7";
             this.Col7.Width = 130;
             // 
             // Col8
             // 
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("B Yekan", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            dataGridViewCellStyle19.Format = "N0";
-            this.Col8.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle39.Font = new System.Drawing.Font("B Yekan", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            dataGridViewCellStyle39.Format = "N0";
+            this.Col8.DefaultCellStyle = dataGridViewCellStyle39;
             this.Col8.HeaderText = "موجودي ريالي انبار";
             this.Col8.Name = "Col8";
             this.Col8.ReadOnly = true;
             this.Col8.Width = 250;
+            // 
+            // pBarDo
+            // 
+            this.pBarDo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pBarDo.Location = new System.Drawing.Point(0, 0);
+            this.pBarDo.Name = "pBarDo";
+            this.pBarDo.Size = new System.Drawing.Size(1042, 33);
+            this.pBarDo.TabIndex = 0;
+            // 
+            // timerDot
+            // 
+            this.timerDot.Interval = 1;
+            this.timerDot.Tick += new System.EventHandler(this.timerDot_Tick);
             // 
             // FRMMain
             // 
@@ -396,6 +425,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1042, 618);
             this.Controls.Add(this.MYdataGrid);
+            this.Controls.Add(this.panel5);
             this.Controls.Add(this.panel1);
             this.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -413,6 +443,7 @@
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
             this.panel2.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.MYdataGrid)).EndInit();
             this.ResumeLayout(false);
 
@@ -421,7 +452,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.DataGridView MYdataGrid;
         private System.Windows.Forms.Button btnDone;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.Panel panel2;
@@ -437,6 +467,10 @@
         private System.Windows.Forms.Button btnGetUserPass;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TextBox TXTSearch;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.ComponentModel.BackgroundWorker backGUpdateGoods;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.DataGridView MYdataGrid;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col3;
@@ -445,7 +479,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Col6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col8;
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.ProgressBar pBarDo;
+        private System.Windows.Forms.Timer timerDot;
     }
 }
 
