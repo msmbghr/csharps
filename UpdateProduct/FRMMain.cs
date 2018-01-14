@@ -10,6 +10,13 @@ using System.Windows.Forms;
 
 namespace UpdateProduct
 {
+    public class Inventory
+    {
+        public int mohvah { get; set; }
+        public decimal mojkavah { get; set; }
+        public int mojkajoz { get; set; }
+        public decimal pure_buy_price { get; set; }
+    }
     public partial class FRMMain : Form
     {
         public FRMMain()
@@ -117,36 +124,29 @@ namespace UpdateProduct
             Decimal c = Convert.ToDecimal(MYdataGrid.CurrentRow.Cells[5].Value);
         }
 
-        public void CompareData(int shka, SqlCommand cmd, int mohvah, decimal mojkavah, int mojkajoz, decimal pure_buy_price)
+        public bool CompareData(int shka,int mohvah,decimal mojkavah,int mojkajoz,decimal buy_price)
         {
-            cmd = new SqlCommand("SELECT  mohvah,mojkavah,mojkajoz,buy_price FROM ka_act  where shka=" + shka + " and act_id>1 ORDER BY rdf DESC", cnn);
+            bool tf = false; ;
+          SqlCommand  cmd1 = new SqlCommand("SELECT  mohvah,mojkavah,mojkajoz,buy_price FROM inventory  where shka=" + shka + " ", cnn);
 
-            SqlDataAdapter adapter = new SqlDataAdapter(cmd);
-            DataSet ds = new DataSet();
-            adapter.Fill(ds, "ka_act");
-            MessageBox.Show(ds.Tables["ka_act"].Rows[0]["mohvah"].ToString());
-            MessageBox.Show(ds.Tables["ka_act"].Rows[0]["mojkavah"].ToString());
-            MessageBox.Show(ds.Tables["ka_act"].Rows[0]["mojkajoz"].ToString());
-            MessageBox.Show(ds.Tables["ka_act"].Rows[0]["buy_price"].ToString());
+         
+            Inventory inentory = new Inventory();
+           
+                SqlDataReader dr = cmd1.ExecuteReader();
+                while (dr.Read())
+                {
+                    inentory.mohvah =int.Parse( dr[0].ToString());
+                    inentory.mojkavah = decimal.Parse(dr[1].ToString());
+                    inentory.mojkajoz = int.Parse(dr[2].ToString());
+                    inentory.pure_buy_price = decimal.Parse(dr[3].ToString());
+                }
+            dr.Close();
+            if (mohvah!= inentory.mohvah || mojkavah!= inentory.mojkavah || mojkajoz!= inentory.mojkajoz|| buy_price!= inentory.pure_buy_price)
+            {
+                tf = true; 
+            }
+            return tf;
 
-            //foreach (SqlDataReader column in )
-            //    dt.Columns.Add(column.Name, typeof(string));
-            //dt.Columns.Add("mohvah", typeof(int)); 
-            //dt.Columns.Add("mojkavah", typeof(string));
-            //dt.Columns.Add("mojkajoz", typeof(string));
-            //dt.Columns.Add("buy_price", typeof(string));
-
-            //while (da.Read())
-            //{
-            //    DataRow dr1 = dt.NewRow();
-            //    dr1[0] = da.GetInt32(da.GetOrdinal("mohvah"));
-            //    dr1[1] = da.GetDecimal(da.GetOrdinal("mojkavah"));
-            //    dr1[2] = da.GetInt32(da.GetOrdinal("mojkajoz"));
-            //    dr1[3] = da.GetDecimal(da.GetOrdinal("buy_price"));
-            //    dt.Rows.Add(dr1);
-            //    MessageBox.Show(dr1[0].ToString());
-
-            //}
         }
         public void checkSatateConnection(int ol)
         {
@@ -164,15 +164,16 @@ namespace UpdateProduct
         }
         private void btnDone_Click(object sender, EventArgs e)
         {
-
+            System.Text.StringBuilder nakaOk = new System.Text.StringBuilder();
+            System.Text.StringBuilder nakacancel = new System.Text.StringBuilder();
+            System.Text.StringBuilder nakanoneChange = new System.Text.StringBuilder();
+            int boolInt =0;
+            cnn = new SqlConnection(MyFunc.stringconnect());
+            checkSatateConnection(1);
             for (int i = 0; i < MYdataGrid.Rows.Count; i++)
             {
-                cnn = new SqlConnection(MyFunc.stringconnect());
-                checkSatateConnection(1);
                 int shka = int.Parse(MYdataGrid.Rows[i].Cells[1].Value.ToString());
                 string naka = MYdataGrid.Rows[i].Cells[2].Value.ToString();
-                bool canchange = false;
-
                 int mohvah = int.Parse(MYdataGrid.Rows[i].Cells[4].Value.ToString());
                 decimal mojkavah = decimal.Parse(MYdataGrid.Rows[i].Cells[5].Value.ToString());
                 int mojkajoz = int.Parse(MYdataGrid.Rows[i].Cells[6].Value.ToString());
@@ -180,32 +181,48 @@ namespace UpdateProduct
                 cmd = new SqlCommand("SELECT TOP 1 * FROM ka_act  where shka=" + shka + " and act_id>1 ORDER BY rdf DESC", cnn);
                 //CompareData(shka);
                 //int count =int.Parse(cmd.ExecuteScalar().ToString());
-                if (cmd.ExecuteScalar() == null)
+                if (cmd.ExecuteScalar() == null )
                 {
-                    string query = "update inventory set mohvah =" + mohvah +
+                    #region IFOK
+
+                    if (CompareData(shka, mohvah, mojkavah, mojkajoz, pure_buy_price))
+                    {
+                        string query = "update inventory set mohvah =" + mohvah +
                         ", mojkavah = " + mojkavah + ",mojkajoz=" + mojkajoz + ",pure_buy_price=" + pure_buy_price +
                         ",buy_price=" + pure_buy_price + ",inventory_price=" + pure_buy_price +
                         ",buyjoz=" + pure_buy_price + " where shka=" + shka + "";
-                    string query2 = "update ka_act set tedvah = " + mojkavah + ",tedjoz=" + mojkajoz +
-                        ",price=" + pure_buy_price +
-                         ",invepgh=" + pure_buy_price + ",invep=" + pure_buy_price + "where shka = " + shka + "";
-                    string query3 = "update inventory_anbars set mojkavah = " + mojkavah + ",mojkajoz=" + mojkajoz + " where shka = " + shka + "";
-                    string query4 = "update anbars_act set tedvah = " + mojkavah + ",tedjoz=" + mojkajoz + ",price=" + pure_buy_price +
-               ",invepgh=" + pure_buy_price + ",invep=" + pure_buy_price + " where shka = " + shka + "";
-                    cmd = new SqlCommand(query, cnn);
-                    cmd.ExecuteNonQuery();
-                    cmd = new SqlCommand(query2, cnn);
-                    cmd.ExecuteNonQuery();
-                    cmd = new SqlCommand(query3, cnn);
-                    cmd.ExecuteNonQuery();
-                    cmd = new SqlCommand(query4, cnn);
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("كالاي  " + naka + " تغيير كرد");
+                        string query2 = "update ka_act set tedvah = " + mojkavah + ",tedjoz=" + mojkajoz +
+                            ",price=" + pure_buy_price +
+                             ",invepgh=" + pure_buy_price + ",invep=" + pure_buy_price + "where shka = " + shka + "";
+                        string query3 = "update inventory_anbars set mojkavah = " + mojkavah + ",mojkajoz=" + mojkajoz + " where shka = " + shka + "";
+                        string query4 = "update anbars_act set tedvah = " + mojkavah + ",tedjoz=" + mojkajoz + ",price=" + pure_buy_price +
+                   ",invepgh=" + pure_buy_price + ",invep=" + pure_buy_price + " where shka = " + shka + "";
+                        cmd = new SqlCommand(query, cnn);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCommand(query2, cnn);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCommand(query3, cnn);
+                        cmd.ExecuteNonQuery();
+                        cmd = new SqlCommand(query4, cnn);
+                        cmd.ExecuteNonQuery();
+                        nakaOk.Append(naka + " ");
+                    }
+                    else
+                    {
+                        nakanoneChange.Append(naka+" ");
+                    }
+                    #endregion
+
                 }
-                checkSatateConnection(0);
+                else
+                {
+                    nakacancel.Append(naka + " ");
+                }
 
             }
-            MessageBox.Show("تغييرات انجام شد");
+            checkSatateConnection(0);
+            MessageBox.Show("كالاهاي***** "+nakaOk.ToString()+"*****تغيير كردند و \n"+" "+ "كالاهاي*****" + nakanoneChange+"*****هيچ تغييري نكردند و \n"+" "+ "كالاهاي "+nakacancel +"به دليل داشتن عمليات در آتيران هيج تغييري نكردن");
+
         }
 
         private void btnDoneComplete_Click(object sender, EventArgs e)
