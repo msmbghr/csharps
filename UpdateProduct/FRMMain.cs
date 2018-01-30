@@ -66,8 +66,8 @@ namespace UpdateProduct
         }
         private void FRMMain_Load(object sender, EventArgs e)
         {
-            //TXTUserName.Text = "admin";
-            //TXTPass.Text = "1385";
+            TXTUserName.Text = "admin";
+            TXTPass.Text = "1385";
             TXTUserName.Focus();
         }
         private void button4_Click(object sender, EventArgs e)
@@ -132,7 +132,7 @@ namespace UpdateProduct
                 inentory.mohvah = int.Parse(row["mohvah"].ToString());
                 inentory.mojkavah = decimal.Parse(row["mojkavah"].ToString());
                 inentory.mojkajoz = int.Parse(row["mojkajoz"].ToString());
-                inentory.pure_buy_price = decimal.Parse(row["buy_price"].ToString());
+                inentory.pure_buy_price = decimal.Parse(row["buyjoz"].ToString());
             }
             if (mohvah != inentory.mohvah || mojkavah != inentory.mojkavah || mojkajoz != inentory.mojkajoz || buy_price != inentory.pure_buy_price)
             {
@@ -144,7 +144,7 @@ namespace UpdateProduct
 
         public void getAllToTable()
         {
-            cmd = new SqlCommand("SELECT  mohvah,mojkavah,mojkajoz,buy_price,shka FROM inventory", cnn);
+            cmd = new SqlCommand("SELECT  mohvah,mojkavah,mojkajoz,buyjoz,shka FROM inventory", cnn);
             SqlDataAdapter adabter = new SqlDataAdapter(cmd);
             adabter.Fill(table1);
         }
@@ -181,7 +181,6 @@ namespace UpdateProduct
                 decimal pure_buy_price = decimal.Parse(MYdataGrid.Rows[i].Cells[7].Value.ToString());
                 cmd = new SqlCommand("SELECT TOP 1 * FROM ka_act  where shka=" + shka + " and act_id>1 ORDER BY rdf DESC", cnn);
                 //CompareData(shka);
-                timerDot.Enabled = true;
                 //int count =int.Parse(cmd.ExecuteScalar().ToString());
                 if (cmd.ExecuteScalar() == null)
                 {
@@ -224,7 +223,9 @@ namespace UpdateProduct
 
             }
             checkSatateConnection(0);
-            MessageBox.Show("كالاهاي***** " + nakaOk.ToString() + "*****تغيير كردند و \n" + " " + "كالاهاي*****" + nakanoneChange + "*****هيچ تغييري نكردند و \n" + " " + "كالاهاي***** " + nakacancel + "*****به دليل داشتن عمليات در آتيران هيج تغييري نكردند");
+            MessageBox.Show( "كالاهاي \n************************* \n" + nakacancel + "*************************به دليل داشتن عمليات در آتيران هيج تغييري نكردند");
+          //  MessageBox.Show("كالاهاي***** " + nakaOk.ToString() + "*****تغيير كردند و \n" + " " + "كالاهاي*****" + nakanoneChange + "*****هيچ تغييري نكردند و \n" + " " + "كالاهاي***** " + nakacancel + "*****به دليل داشتن عمليات در آتيران هيج تغييري نكردند");
+
             MYdataGrid.Refresh();
 
 

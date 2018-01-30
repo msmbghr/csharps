@@ -60,6 +60,7 @@
             this.panel5 = new System.Windows.Forms.Panel();
             this.pBarDo = new System.Windows.Forms.ProgressBar();
             this.MYdataGrid = new System.Windows.Forms.DataGridView();
+            this.timerDot = new System.Windows.Forms.Timer(this.components);
             this.Col1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Col2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Col3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,7 +69,6 @@
             this.Col6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Col7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Col8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.timerDot = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel4.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -332,6 +332,11 @@
             this.MYdataGrid.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.MYdataGrid_CellEndEdit);
             this.MYdataGrid.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.MYdataGrid_CellEnter);
             // 
+            // timerDot
+            // 
+            this.timerDot.Interval = 1;
+            this.timerDot.Tick += new System.EventHandler(this.timerDot_Tick);
+            // 
             // Col1
             // 
             this.Col1.DataPropertyName = "shka";
@@ -399,7 +404,6 @@
             this.Col7.DataPropertyName = "buyjoz";
             dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
             dataGridViewCellStyle8.Font = new System.Drawing.Font("B Yekan", 11.25F);
-            dataGridViewCellStyle8.Format = "N0";
             dataGridViewCellStyle8.NullValue = null;
             this.Col7.DefaultCellStyle = dataGridViewCellStyle8;
             this.Col7.HeaderText = "قيمت خريد";
@@ -415,11 +419,6 @@
             this.Col8.Name = "Col8";
             this.Col8.ReadOnly = true;
             this.Col8.Width = 250;
-            // 
-            // timerDot
-            // 
-            this.timerDot.Interval = 1;
-            this.timerDot.Tick += new System.EventHandler(this.timerDot_Tick);
             // 
             // FRMMain
             // 
@@ -473,6 +472,8 @@
         private System.ComponentModel.BackgroundWorker backGUpdateGoods;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.DataGridView MYdataGrid;
+        private System.Windows.Forms.ProgressBar pBarDo;
+        private System.Windows.Forms.Timer timerDot;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col3;
@@ -481,8 +482,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Col6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col7;
         private System.Windows.Forms.DataGridViewTextBoxColumn Col8;
-        private System.Windows.Forms.ProgressBar pBarDo;
-        private System.Windows.Forms.Timer timerDot;
     }
 }
 
