@@ -40,7 +40,7 @@ namespace UpdateProduct
                 }
                 else
                 {
-                    MessageBox.Show("Invalid Login please check username and password");
+                    MessageBox.Show(" نام كاربري يا كلمه ورود را اشتباه وارد كرديد");
                 }
                 command.Dispose();
                 cnn.Close();

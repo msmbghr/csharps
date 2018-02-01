@@ -17,13 +17,13 @@ namespace UpdateProduct
         {
             InitializeComponent();
         }
-        int countWork = 0;
         SqlConnection cnn;
         SqlCommand cmd;
         DataTable table = new DataTable();
         DataTable table1 = new DataTable();
         BindingSource bs = new BindingSource();
         MyFunction MyFunc = new MyFunction();
+        int countCancel = 0;
         int okey = 0;
         private void btnGetUserPass_Click(object sender, EventArgs e)
         {
@@ -38,7 +38,13 @@ namespace UpdateProduct
                 {
                     okey = 1;
                     loadincombobox();
+                    panel2.Enabled = true;
                 }
+                else
+                {
+                    panel2.Enabled = false;
+                }
+                
             }
         }
         private void loadincombobox()
@@ -97,6 +103,12 @@ namespace UpdateProduct
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
             bs.Filter = string.Format("naka LIKE '%{0}%'", TXTSearch.Text);
+            for (int i = 0; i < MYdataGrid.Rows.Count; i++)
+            {
+                Decimal c1 = ((Decimal)(Convert.ToDecimal(MYdataGrid.Rows[i].Cells[4].Value) * Convert.ToDecimal(MYdataGrid.Rows[i].Cells[5].Value) + (Convert.ToDecimal(MYdataGrid.Rows[i].Cells[6].Value.ToString()))));
+                Decimal c2 = c1 * (Decimal)(Convert.ToDecimal(MYdataGrid.Rows[i].Cells[7].Value));
+                MYdataGrid.Rows[i].Cells[0].Value = c2;
+            }
 
         }
 
@@ -126,7 +138,6 @@ namespace UpdateProduct
 
             Inventory inentory = new Inventory();
             DataRow[] dd = table1.Select("shka=" + shka + "");
-            // SqlDataReader dr = cmd1.ExecuteReader();
             foreach (DataRow row in dd)
             {
                 inentory.mohvah = int.Parse(row["mohvah"].ToString());
@@ -167,7 +178,6 @@ namespace UpdateProduct
             System.Text.StringBuilder nakaOk = new System.Text.StringBuilder();
             System.Text.StringBuilder nakacancel = new System.Text.StringBuilder();
             System.Text.StringBuilder nakanoneChange = new System.Text.StringBuilder();
-            int boolInt = 0;
             cnn = new SqlConnection(MyFunc.stringconnect());
             checkSatateConnection(1);
             getAllToTable();
@@ -180,8 +190,6 @@ namespace UpdateProduct
                 int mojkajoz = int.Parse(MYdataGrid.Rows[i].Cells[6].Value.ToString());
                 decimal pure_buy_price = decimal.Parse(MYdataGrid.Rows[i].Cells[7].Value.ToString());
                 cmd = new SqlCommand("SELECT TOP 1 * FROM ka_act  where shka=" + shka + " and act_id>1 ORDER BY rdf DESC", cnn);
-                //CompareData(shka);
-                //int count =int.Parse(cmd.ExecuteScalar().ToString());
                 if (cmd.ExecuteScalar() == null)
                 {
                     #region IFOK
@@ -217,18 +225,24 @@ namespace UpdateProduct
                 }
                 else
                 {
+
                     if (CompareData(shka, mohvah, mojkavah, mojkajoz, pure_buy_price))
+                    {
+                        countCancel += 1;
+                        if (countCancel > 1)
+                        {
+                            nakacancel.Append("  و  ");
+                        }
                         nakacancel.Append(naka + " ");
+                    }
                 }
 
             }
             checkSatateConnection(0);
-            MessageBox.Show( "كالاهاي \n************************* \n" + nakacancel + "*************************به دليل داشتن عمليات در آتيران هيج تغييري نكردند");
+            MessageBox.Show( "كالاهاي \n************************* \n" + nakacancel + "*************************به دليل داشتن عملكرد در آتيران، قابل تغيير نيستند");
           //  MessageBox.Show("كالاهاي***** " + nakaOk.ToString() + "*****تغيير كردند و \n" + " " + "كالاهاي*****" + nakanoneChange + "*****هيچ تغييري نكردند و \n" + " " + "كالاهاي***** " + nakacancel + "*****به دليل داشتن عمليات در آتيران هيج تغييري نكردند");
 
             MYdataGrid.Refresh();
-
-
         }
 
         private void btnDoneComplete_Click(object sender, EventArgs e)
