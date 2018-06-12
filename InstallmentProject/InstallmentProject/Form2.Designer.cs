@@ -1,0 +1,64 @@
+﻿namespace InstallmentProject
+{
+    partial class Form2
+    {
+        /// <summary>
+        /// Required designer variable.
+        /// </summary>
+        private System.ComponentModel.IContainer components = null;
+
+        /// <summary>
+        /// Clean up any resources being used.
+        /// </summary>
+        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        #region Windows Form Designer generated code
+
+        /// <summary>
+        /// Required method for Designer support - do not modify
+        /// the contents of this method with the code editor.
+        /// </summary>
+        private void InitializeComponent()
+        {
+            this.msmButton1 = new MSMControls.MSMButton();
+            this.SuspendLayout();
+            // 
+            // msmButton1
+            // 
+            this.msmButton1.BackColor = System.Drawing.Color.DodgerBlue;
+            this.msmButton1.ForeColor = System.Drawing.Color.White;
+            this.msmButton1.Location = new System.Drawing.Point(235, 228);
+            this.msmButton1.Name = "msmButton1";
+            this.msmButton1.OnMouseHoverBackcolor = System.Drawing.Color.DarkOrchid;
+            this.msmButton1.Size = new System.Drawing.Size(75, 23);
+            this.msmButton1.TabIndex = 1;
+            this.msmButton1.Text = "بستن";
+            this.msmButton1.UseVisualStyleBackColor = false;
+            this.msmButton1.Click += new System.EventHandler(this.msmButton1_Click);
+            // 
+            // Form2
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(639, 466);
+            this.Controls.Add(this.msmButton1);
+            this.Location = new System.Drawing.Point(0, 0);
+            this.Name = "Form2";
+            this.Text = "Form2";
+            this.ResumeLayout(false);
+
+        }
+
+        #endregion
+
+        private MSMControls.MSMButton msmButton1;
+    }
+}

@@ -1,0 +1,38 @@
+c:\users\atiran00013\documents\visual studio 2015\Projects\InstallmentProject\InstallmentProject\bin\Debug\InstallmentProject.exe.config
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\bin\Debug\InstallmentProject.exe.config
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\bin\Debug\InstallmentProject.exe
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\bin\Debug\InstallmentProject.pdb
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.csprojResolveAssemblyReference.cache
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.Properties.Resources.resources
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.csproj.GenerateResource.Cache
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.exe
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.pdb
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\bin\Debug\MSMClass.dll
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\bin\Debug\MSMControls.dll
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\bin\Debug\System.Windows.Forms.Ribbon.dll
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\bin\Debug\System.Windows.Forms.Ribbon.pdb
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\bin\Debug\MSMControls.pdb
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\bin\Debug\MSMClass.pdb
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.MainForm.resources
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.Form1.resources
+D:\ProjectVisualStudio\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.Form2.resources
+F:\My project\InstallmentProject\InstallmentProject\bin\Debug\InstallmentProject.exe.config
+F:\My project\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.exe
+F:\My project\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.pdb
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\bin\Debug\InstallmentProject.exe.config
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.exe
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.pdb
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\bin\Debug\InstallmentProject.exe
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\bin\Debug\InstallmentProject.pdb
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\bin\Debug\MSMClass.dll
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\bin\Debug\MSMControls.dll
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\bin\Debug\System.Windows.Forms.Ribbon.dll
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\bin\Debug\MSMControls.pdb
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\bin\Debug\System.Windows.Forms.Ribbon.pdb
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\bin\Debug\MSMClass.pdb
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.csprojResolveAssemblyReference.cache
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.Form1.resources
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.Form2.resources
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.MainForm.resources
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.Properties.Resources.resources
+C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\InstallmentProject\obj\Debug\InstallmentProject.csproj.GenerateResource.Cache
