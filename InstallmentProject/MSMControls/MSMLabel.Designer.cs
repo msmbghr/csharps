@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            this.ForeColor = System.Drawing.Color.FromArgb(237,238,227);
+            this.Font = new System.Drawing.Font("B Yekan", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+
         }
 
         #endregion

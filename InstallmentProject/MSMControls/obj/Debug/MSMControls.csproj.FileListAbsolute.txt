@@ -22,3 +22,15 @@ C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\MSMControls\bin\Deb
 C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\MSMControls\bin\Debug\MSMControls.pdb
 C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\MSMControls\bin\Debug\MSMClass.dll
 C:\Users\atiran00013\Source\Repos\csharps\InstallmentProject\MSMControls\bin\Debug\MSMClass.pdb
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\bin\Debug\MSMControls.dll
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\bin\Debug\MSMControls.pdb
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\bin\Debug\MSMClass.dll
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\bin\Debug\MSMClass.pdb
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\obj\Debug\MSMControls.csprojResolveAssemblyReference.cache
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\obj\Debug\MyTabControl.MSMFormTemplate.resources
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\obj\Debug\MSMControls.MyTXTDate.resources
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\obj\Debug\MyTabControl.TabControlX.resources
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\obj\Debug\MyTabControl.TabPanelControl.resources
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\obj\Debug\MSMControls.csproj.GenerateResource.Cache
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\obj\Debug\MSMControls.dll
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMControls\obj\Debug\MSMControls.pdb

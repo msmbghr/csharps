@@ -5,3 +5,10 @@ D:\ProjectVisualStudio\InstallmentProject\MSMClass\bin\Debug\MSMClass.dll
 D:\ProjectVisualStudio\InstallmentProject\MSMClass\bin\Debug\MSMClass.pdb
 D:\ProjectVisualStudio\InstallmentProject\MSMClass\obj\Debug\MSMClass.dll
 D:\ProjectVisualStudio\InstallmentProject\MSMClass\obj\Debug\MSMClass.pdb
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMClass\bin\Debug\MSMClass.dll
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMClass\bin\Debug\MSMClass.pdb
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMClass\obj\Debug\MSMClass.csprojResolveAssemblyReference.cache
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMClass\obj\Debug\MSMClass.Properties.Resources.resources
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMClass\obj\Debug\MSMClass.csproj.GenerateResource.Cache
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMClass\obj\Debug\MSMClass.dll
+C:\Users\msm_bghr\Source\Repos\csharps\InstallmentProject\MSMClass\obj\Debug\MSMClass.pdb

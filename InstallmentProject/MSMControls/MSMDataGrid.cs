@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace MSMControls
 {
-    public partial class MSMDataGrid : DataGrid
+    public partial class MSMDataGrid : DataGridView
     {
         public MSMDataGrid()
         {
