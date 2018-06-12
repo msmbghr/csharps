@@ -72,8 +72,8 @@ namespace UpdateProduct
         }
         private void FRMMain_Load(object sender, EventArgs e)
         {
-            TXTUserName.Text = "admin";
-            TXTPass.Text = "1385";
+            //TXTUserName.Text = "admin";
+            //TXTPass.Text = "1385";
             TXTUserName.Focus();
         }
         private void button4_Click(object sender, EventArgs e)
@@ -122,7 +122,12 @@ namespace UpdateProduct
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            DialogResult dr;
+            dr = MessageBox.Show("آيا مي خواهيد از برنامه خاريج شويد؟","هشدار",MessageBoxButtons.YesNo,MessageBoxIcon.Error);
+            if (dr==DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
         private void MYdataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -244,14 +249,12 @@ namespace UpdateProduct
 
             MYdataGrid.Refresh();
         }
-
         private void btnDoneComplete_Click(object sender, EventArgs e)
         {
             //update inventory_anbars set mojkavah = @mojkavah, mojkajoz = @mojkajoz where rdf_anbars = 1 and shka = @shka
             //update ka_act set tedvah = @mojkavah, tedjoz = @mojkajoz where shka = @shka and act_id = 1
             //update anbars_act set tedvah = @mojkavah, tedjoz = @mojkajoz where shka = @shka and act_id = 1 and rdf_anbar = 1
         }
-
         private void btnDone_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F2)
