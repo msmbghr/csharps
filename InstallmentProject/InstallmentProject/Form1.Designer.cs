@@ -164,7 +164,6 @@
             dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.msmDataGrid1.RowsDefaultCellStyle = dataGridViewCellStyle4;
             this.msmDataGrid1.RowTemplate.Height = 30;
-            this.msmDataGrid1.RowTemplate.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.msmDataGrid1.Size = new System.Drawing.Size(1042, 452);
             this.msmDataGrid1.TabIndex = 1;
             // 
@@ -337,7 +336,7 @@
             this.msmButton1.AutoSize = true;
             this.msmButton1.BackColor = System.Drawing.Color.DodgerBlue;
             this.msmButton1.ForeColor = System.Drawing.Color.White;
-            this.msmButton1.Location = new System.Drawing.Point(935, 18);
+            this.msmButton1.Location = new System.Drawing.Point(25, 18);
             this.msmButton1.Name = "msmButton1";
             this.msmButton1.OnMouseHoverBackcolor = System.Drawing.Color.DarkOrchid;
             this.msmButton1.Size = new System.Drawing.Size(75, 23);
