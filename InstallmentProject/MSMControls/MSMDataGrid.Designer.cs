@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
-
-namespace MSMControls
+﻿namespace MSMControls
 {
     partial class MSMDataGrid
     {
@@ -32,12 +29,8 @@ namespace MSMControls
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-
         }
 
-
-    }
-}
         #endregion
     }
 }
