@@ -7,6 +7,7 @@ using System.Web.Http;
 using HelpModel;
 using HelpAtiran.Models;
 using ClassModels;
+using Models;
 
 namespace HelpAtiran.Controllers
 {
@@ -194,17 +195,18 @@ i.DeviceId == management.DeviceId
 
         [HttpPost]
         [Route("~/get/Question/{startParameter}/{countreturn}")]
-        public IEnumerable<Question> getUserName2(int startParameter, int countreturn, [FromBody]UsersManagements user)
+        public ResultQuestion getUserName2(int startParameter, int countreturn, [FromBody]UsersManagements user)
         {
-            var q = (from i in context.Questions
+             var q = (from i in context.Questions
                      where i.active == "t"
                      orderby i.id
                      select new Question
                      {
                          id = i.id,
                          question = i.question
+                         ,active=i.active
                      }).ToList().Skip(startParameter).Take(countreturn);
-            return q;
+            return new ResultQuestion(q);
         }
 
         [HttpPost]

@@ -45,6 +45,7 @@
     <Compile Include="OveralSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.cs" />
+    <Compile Include="ResultQuestion.cs" />
     <Compile Include="UsePermitions.cs" />
     <Compile Include="UsersManagements.cs" />
   </ItemGroup>
