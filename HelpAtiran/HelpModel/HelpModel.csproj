@@ -84,7 +84,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.Config" />
+    <None Include="App.Config">
+      <SubType>Designer</SubType>
+    </None>
     <EntityDeploy Include="myModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>myModel.Designer.cs</LastGenOutput>
@@ -109,6 +111,7 @@
       <DependentUpon>myModel.edmx</DependentUpon>
       <LastGenOutput>myModel.Context.cs</LastGenOutput>
     </Content>
+    <Content Include="myModel.edmx.sql" />
     <Content Include="myModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>myModel.edmx</DependentUpon>
