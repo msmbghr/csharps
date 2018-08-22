@@ -35,8 +35,8 @@ namespace HelpAtiran.Controllers
             }
             else
             {
-                if (query.username.ToLower() == management.username.ToLower()
-                && query.password.ToLower() == management.password.ToLower()
+                if (query.username == management.username
+                && query.password == management.password
                 && query.status == management.status)
                 {
                     message.idMessage = (int)MessageCode.OkUser;
@@ -53,82 +53,23 @@ namespace HelpAtiran.Controllers
         }
         public MessageModel authenticationCreateUser(UsersManagements management)
         {
-            try
+            MessageModel message = new MessageModel();
+            var query = (from i in context.UsersManagement where i.username == management.username.Trim() || i.DeviceId == management.DeviceId select i).FirstOrDefault();
+            if (query == null)
             {
-                MessageModel message = new MessageModel();
-                var query = (from i in context.UsersManagement
-                             where i.username == management.username.ToString().Trim() ||
-i.DeviceId == management.DeviceId
-                             select i).ToList();
-                if (query.Count == 0)
-                {
-                    message.idMessage = (int)MessageCode.Savedata;
-                    message.contextMessage = "كاربر شما ثبت شد";
-                }
-                else
-                {
-
-                    message.idMessage = (int)MessageCode.EntityUser;
-                    message.contextMessage = "اين يوز قبلا ثبت شده است";
-                }
-                return message;
-
+                message.idMessage = (int)MessageCode.Savedata;
+                message.contextMessage = "كاربر شما ثبت شد";
             }
-            catch (Exception)
+            else
             {
-                MessageModel message = new MessageModel();
-                message.idMessage = (int)MessageCode.UserNotFind;
-                return message;
+
+                message.idMessage = (int)MessageCode.EntityUser;
+                message.contextMessage = "اين يوز قبلا ثبت شده است";
             }
 
-
+            return message;
 
         }
-
-
-        #region USERS
-
-        [HttpPost]
-        [Route("~/get/createUser")]
-        public HttpResponseMessage createUser([FromBody]UsersManagements user)
-        {
-            try
-            {
-                MessageModel value = new MessageModel();
-                value = authenticationCreateUser(user);
-                ClassMessages e = new ClassMessages((int)value.idMessage);
-                if (value.idMessage == (int)MessageCode.Savedata)
-                {
-                    UsersManagement u = new UsersManagement
-                    {
-                        username = user.username,
-                        password = user.password,
-                        status = user.status,
-                        DeviceId = user.DeviceId
-                    };
-                    UsePermition up = new UsePermition { permitionId = user.userpermition, UsersManagement = u };
-                    context.UsersManagement.Add(u);
-                    context.UsePermition.Add(up);
-                    context.SaveChanges();
-                    var message = Request.CreateResponse(HttpStatusCode.OK, e);
-                    return message;
-
-                }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, e);
-
-                }
-
-            }
-            catch (Exception ex)
-            {
-                ClassMessages e = new ClassMessages(5);
-                return Request.CreateResponse(HttpStatusCode.OK, e);
-            }
-
-        }
-
 
         [HttpPost]
         [Route("~/update/users")]
@@ -150,93 +91,42 @@ i.DeviceId == management.DeviceId
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
 
         }
 
+
         [HttpPost]
-        [Route("~/get/checkUser")]
-        public HttpResponseMessage checkUsers([FromBody]UsersManagements user)
+        [Route("~/update/answer")]
+        public HttpResponseMessage updateAnswer(GetAnswerModel getanswerMode)
         {
             try
             {
                 MessageModel value = new MessageModel();
-                value = authenticationUser(user);
-                ClassMessages e = new ClassMessages((int)value.idMessage);
+                value = authenticationUser(getanswerMode.authenticationUser);
                 if (value.idMessage == (int)MessageCode.OkUser)
                 {
-                    var qq = context.UsePermition.Where(p => p.UsersManagement.DeviceId == user.DeviceId).FirstOrDefault();
-                    e.username = user.username;
-                    e.password = user.password;
-                    e.status = user.status;
-                    e.DeviceId = user.DeviceId;
-                    e.userpermition = qq.permitionId;
-                    var message = Request.CreateResponse(HttpStatusCode.OK, e);
-                    return message;
-                }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, e);
-                }
-
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, ex);
-            }
-
-        }
-
-        #endregion
-
-        #region QUESTION
-
-        [HttpPost]
-        [Route("~/get/Question/{startParameter}/{countreturn}")]
-        public IEnumerable<Question> getUserName2(int startParameter, int countreturn, [FromBody]UsersManagements user)
-        {
-            var q = (from i in context.Questions
-                     where i.active == "t"
-                     orderby i.id
-                     select new Question
-                     {
-                         id = i.id,
-                         question = i.question
-                     }).ToList().Skip(startParameter).Take(countreturn);
-            return q;
-        }
-
-        [HttpPost]
-        [Route("~/set/question")]
-        public HttpResponseMessage setQuestion(GetQuestionModel getQuestionMode)
-        {
-            try
-            {
-                MessageModel value = new MessageModel();
-                value = authenticationUser(getQuestionMode.authenticationUser);
-                if (value.idMessage == (int)MessageCode.OkUser)
-                {
-                    Questions q = new Questions();
-                    q.question = getQuestionMode.question.question;
-                    q.active = "t";
-                    context.Questions.Add(q);
+                    var q = context.Answers.Where(i => i.id == getanswerMode.answer.id).FirstOrDefault();
+                    q.answer = getanswerMode.answer.answer;
+                    q.active = getanswerMode.answer.active;
                     context.SaveChanges();
                     var message = Request.CreateResponse(HttpStatusCode.OK, (int)MessageCode.Savedata);
                     return message;
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, value.idMessage.ToString());
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, value.idMessage.ToString());
                 }
 
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
 
         }
+
 
         [HttpPost]
         [Route("~/update/question")]
@@ -257,49 +147,115 @@ i.DeviceId == management.DeviceId
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, value.idMessage.ToString());
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, value.idMessage.ToString());
                 }
 
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+
+        }
+
+
+        [HttpPost]
+        [Route("~/get/createUser")]
+        public HttpResponseMessage createUser([FromBody]UsersManagements user)
+        {
+            try
+            {
+                MessageModel value = new MessageModel();
+                value = authenticationCreateUser(user);
+                if (value.idMessage == (int)MessageCode.Savedata)
+                {
+                    UsersManagement u = new UsersManagement
+                    {
+                        username = user.username,
+                        password = user.password
+                       ,
+                        status = user.status,
+                        DeviceId = user.DeviceId
+                    };
+                    UsePermition up = new UsePermition { permitionId = user.userpermition, UsersManagement = u };
+                    context.UsersManagement.Add(u);
+                    context.UsePermition.Add(up);
+                    context.SaveChanges();
+                    var message = Request.CreateResponse(HttpStatusCode.OK, (int)MessageCode.OkUser);
+                    return message;
+
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, value.idMessage.ToString());
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
 
         }
 
         [HttpPost]
-        [Route("~/get/countQuestion")]
-        public HttpResponseMessage getCountQuestion(UsersManagements updateUserMode)
+        [Route("~/get/checkUser")]
+        public HttpResponseMessage getcheckUsers([FromBody]UsersManagements user)
         {
             try
             {
                 MessageModel value = new MessageModel();
-                value = authenticationUser(updateUserMode);
-                ClassCount countQuestion = new ClassCount((int)value.idMessage);
+                value = authenticationUser(user);
                 if (value.idMessage == (int)MessageCode.OkUser)
                 {
-                    int result = (from i in context.Questions where i.active == "t" select i).Count();
-                    countQuestion.ToatalCount = result;
-                    return Request.CreateResponse(HttpStatusCode.OK, countQuestion);
+                    var message = Request.CreateResponse(HttpStatusCode.OK, (int)MessageCode.OkUser);
+                    return message;
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, countQuestion);
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, value.idMessage.ToString());
                 }
 
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
 
         }
 
 
-        #endregion
+        [HttpPost]
+        [Route("~/get/question")]
+        public HttpResponseMessage getQuestion([FromBody]UsersManagements user)
+        {
+            try
+            {
 
-        #region ANSWER
+                MessageModel value = new MessageModel();
+                value = authenticationUser(user);
+                if (value.idMessage == (int)MessageCode.OkUser)
+                {
+                    var query = context.Questions.ToList();
+
+                    var message = Request.CreateResponse(HttpStatusCode.OK, query);
+                    return message;
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, value.idMessage.ToString());
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+
+        }
+
         [HttpPost]
         [Route("~/get/answer")]
         public HttpResponseMessage getAnswer([FromBody]UsersManagements user)
@@ -318,14 +274,14 @@ i.DeviceId == management.DeviceId
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, value.idMessage.ToString());
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, value.idMessage.ToString());
 
                 }
 
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
 
         }
@@ -351,44 +307,115 @@ i.DeviceId == management.DeviceId
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, value.idMessage.ToString());
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, value.idMessage.ToString());
                 }
 
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
 
         }
 
-
         [HttpPost]
-        [Route("~/update/answer")]
-        public HttpResponseMessage updateAnswer(GetAnswerModel getanswerMode)
+        [Route("~/set/question")]
+        public HttpResponseMessage setQuestion(GetQuestionModel getQuestionMode)
         {
             try
             {
                 MessageModel value = new MessageModel();
-                value = authenticationUser(getanswerMode.authenticationUser);
+                value = authenticationUser(getQuestionMode.authenticationUser);
                 if (value.idMessage == (int)MessageCode.OkUser)
                 {
-                    var q = context.Answers.Where(i => i.id == getanswerMode.answer.id).FirstOrDefault();
-                    q.answer = getanswerMode.answer.answer;
-                    q.active = getanswerMode.answer.active;
+                    Questions q = new Questions();
+                    q.question = getQuestionMode.question.question;
+                    q.active = "t";
+                    context.Questions.Add(q);
                     context.SaveChanges();
                     var message = Request.CreateResponse(HttpStatusCode.OK, (int)MessageCode.Savedata);
                     return message;
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, value.idMessage.ToString());
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, value.idMessage.ToString());
                 }
 
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
+
+        }
+
+        [HttpPost]
+        [Route("~/get/Users")]
+        public GetAnswerModel getUserName()
+        {
+            Answer q1 = (from i in context.Answers
+                         where (i.id == 2)
+                         select new Answer
+                         {
+                             id = i.id,
+                             idQuestion = i.Questions.id,
+                             answer = i.answer,
+                             active = i.active
+                         }).FirstOrDefault();
+            UsersManagements q2 = (from i in context.UsersManagement
+                                   where (i.id == 1)
+                                   select new UsersManagements
+                                   {
+                                       id = i.id,
+                                       DeviceId = i.DeviceId,
+                                       password = i.password,
+                                       username = i.username,
+                                       status = i.status
+                                   }).FirstOrDefault();
+            GetAnswerModel g = new GetAnswerModel();
+            g.answer = q1;
+            g.authenticationUser = q2;
+            return g;
+        }
+
+        [HttpPost]
+        [Route("~/get/Qouestion/{startParameter}/{countreturn}")]
+        public IEnumerable<Question> getUserName2(int startParameter,int countreturn, [FromBody]UsersManagements user)
+        {
+            var q = (from i in context.Questions where i.active =="t" orderby i.id
+                     select new Question
+                     {
+                         id =i.id,question=i.question
+                     }).ToList().Skip(startParameter).Take(countreturn);
+            return q;
+        }
+
+        //[Route("~/get/countQuestion/{startParameter}/{countreturn}")]
+
+        [HttpPost]
+        [Route("~/get/countQuestion")]
+        public HttpResponseMessage getCountQuestion(UsersManagements updateUserMode)
+        {
+            try
+            {
+                MessageModel value = new MessageModel();
+                value = authenticationUser(updateUserMode);
+
+                if (value.idMessage == (int)MessageCode.OkUser)
+                {
+                    var q = (from i in context.Questions select i).Count();
+                    var message = Request.CreateResponse(HttpStatusCode.OK, q);
+                    return message;
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, value.idMessage.ToString());
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
 
         }
@@ -401,42 +428,25 @@ i.DeviceId == management.DeviceId
             {
                 MessageModel value = new MessageModel();
                 value = authenticationUser(updateUserMode);
-                ClassCount countAnswer = new ClassCount((int)value.idMessage);
+
                 if (value.idMessage == (int)MessageCode.OkUser)
                 {
-                    int q= (from i in context.Answers where i.active=="t" select i).Count();
-                    countAnswer.ToatalCount = q;
-                    return Request.CreateResponse(HttpStatusCode.OK, countAnswer); 
+                    var q = (from i in context.Answers select i).Count();
+                    var message = Request.CreateResponse(HttpStatusCode.OK, q);
+                    return message;
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, countAnswer);
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, value.idMessage.ToString());
                 }
 
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, ex);
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
             }
 
         }
-
-
-        #endregion
-
-        #region TEST
-        [HttpGet]
-        [Route("~/get/Users")]
-        public tests getUserName()
-        {
-            return new tests("meysam");
-        }
-        #endregion
-
-
-
-
-
 
 
 
@@ -534,4 +544,3 @@ i.DeviceId == management.DeviceId
 //        "status": 1,
 //        "DeviceId": "1"
 //}
-
