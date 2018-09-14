@@ -16,5 +16,10 @@ namespace HelpAtiran.Models
 
         [DataMember]
         public Answer answer { get; set; }
+
+        public GetAnswerModel()
+        {
+
+        }
     }
 }

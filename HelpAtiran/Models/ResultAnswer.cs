@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class ResultQuestion
+    public class ResultAnswer
     {
         public MessageModel message { get; set; }
-        public IEnumerable<Question> question { get; set; }
 
-        public ResultQuestion(MessageModel message, IEnumerable<Question> question)
+        public IEnumerable<Answer> answer { get; set; }
+
+
+        public ResultAnswer(MessageModel message,IEnumerable<Answer> answer)
         {
             this.message = message;
-            this.question = question;
+            this.answer = answer;
         }
     }
 }

@@ -23,6 +23,7 @@ namespace HelpModel
         public int id { get; set; }
         public string question { get; set; }
         public string active { get; set; }
+        public Nullable<byte> kind { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Answers> Answers { get; set; }

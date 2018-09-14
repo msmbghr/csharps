@@ -12,7 +12,7 @@ namespace ClassModels
         public int idQuestion { get; set; }
         public string answer { get; set; }
         public string active { get; set; }
-
+        public byte? kind { get; set; }
 
     }
 }

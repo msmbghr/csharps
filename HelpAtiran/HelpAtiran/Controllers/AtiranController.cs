@@ -8,6 +8,7 @@ using HelpModel;
 using HelpAtiran.Models;
 using ClassModels;
 using Models;
+using System.Web.Script.Serialization;
 
 namespace HelpAtiran.Controllers
 {
@@ -22,7 +23,8 @@ namespace HelpAtiran.Controllers
             ProductIdError = 2,
             OkUser = 3,
             Savedata = 4,
-            EntityUser = 5
+            EntityUser = 5,
+            DuplicateData=6
 
         }
         public MessageModel authenticationUser(UsersManagements management)
@@ -41,6 +43,7 @@ namespace HelpAtiran.Controllers
                 && query.status == management.status)
                 {
                     message.idMessage = (int)MessageCode.OkUser;
+                    message.contextMessage = "كاربر مورد نظر موجود مي باشد";
                 }
                 else
                 {
@@ -90,7 +93,7 @@ i.DeviceId == management.DeviceId
         #region USERS
 
         [HttpPost]
-        [Route("~/get/createUser")]
+        [Route("~/post/createUser")]
         public HttpResponseMessage createUser([FromBody]UsersManagements user)
         {
             try
@@ -132,7 +135,7 @@ i.DeviceId == management.DeviceId
 
 
         [HttpPost]
-        [Route("~/update/users")]
+        [Route("~/post/update/users")]
         public HttpResponseMessage updateUsers(UsersManagements updateUserMode)
         {
             try
@@ -191,24 +194,62 @@ i.DeviceId == management.DeviceId
 
         #endregion
 
-        #region QUESTION
+        #region QUESTIONS
 
         [HttpPost]
-        [Route("~/get/Question/{startParameter}/{countreturn}")]
-        public ResultQuestion getUserName2(int startParameter, int countreturn, [FromBody]UsersManagements user)
+        [Route("~/get/QuestionK1/{startParameter}/{countreturn}")]
+        public ResultQuestion getQuestionKind1(int startParameter, int countreturn, [FromBody]UsersManagements user)
         {
-             var q = (from i in context.Questions
+            MessageModel value = new MessageModel();
+            value = authenticationUser(user);
+            if (value.idMessage == (int)MessageCode.OkUser)
+            {
+                var q = (from i in context.Questions
+                         where i.active == "t"
+                         where i.kind == 1
+                         orderby i.id
+                         select new Question
+                         {
+                             id = i.id,
+                             question = i.question
+                             ,
+                             active = i.active,
+                             kind = i.kind
+                         }).ToList().Skip(startParameter).Take(countreturn);
+                return new ResultQuestion(value, q);
+            }
+            else
+            {
+                return new ResultQuestion(value, null);
+            }
+        }
+
+        [HttpPost]
+        [Route("~/get/QuestionK2/{startParameter}/{countreturn}")]
+        public ResultQuestion getQuestionKind2(int startParameter, int countreturn, [FromBody]UsersManagements user)
+        {
+            MessageModel value = new MessageModel();
+            value = authenticationUser(user);
+            if (value.idMessage == (int)MessageCode.OkUser)
+            {
+                var q = (from i in context.Questions
                      where i.active == "t"
+                     where i.kind == 2
                      orderby i.id
                      select new Question
                      {
                          id = i.id,
                          question = i.question
-                         ,active=i.active
+                         ,
+                         active = i.active
                      }).ToList().Skip(startParameter).Take(countreturn);
-            return new ResultQuestion(q);
+                return new ResultQuestion(value, q);
+            }
+            else
+            {
+                return new ResultQuestion(value, null);
+            }
         }
-
         [HttpPost]
         [Route("~/set/question")]
         public HttpResponseMessage setQuestion(GetQuestionModel getQuestionMode)
@@ -301,40 +342,39 @@ i.DeviceId == management.DeviceId
 
         #endregion
 
-        #region ANSWER
+        #region ANSWERS
         [HttpPost]
-        [Route("~/get/answer")]
-        public HttpResponseMessage getAnswer([FromBody]UsersManagements user)
+        [Route("~/get/answerK1/{startParameter}/{countReturn}")]
+        public ResultAnswer getAnswerKind1(int startParameter, int countreturn, [FromBody]UsersManagements user)
         {
-            try
+            MessageModel value = new MessageModel();
+            value = authenticationUser(user);
+            if (value.idMessage == (int)MessageCode.OkUser)
             {
-
-                MessageModel value = new MessageModel();
-                value = authenticationUser(user);
-                if (value.idMessage == (int)MessageCode.OkUser)
-                {
-                    var query = context.Answers.ToList();
-
-                    var message = Request.CreateResponse(HttpStatusCode.OK, query);
-                    return message;
-                }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.OK, value.idMessage.ToString());
-
-                }
+                var q = (from i in context.Answers
+                         where i.active == "t"
+                         where i.kind == 1
+                         orderby i.id
+                         select new Answer
+                         {
+                             id = i.id,
+                             answer = i.answer,
+                             active = i.active,
+                             kind = i.kind,
+                             idQuestion = i.Questions.id
+                         }).ToList().Skip(startParameter).Take(countreturn);
+                return new ResultAnswer(value, q);
+            }
+            else
+            {
+                return new ResultAnswer(value, null);
 
             }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.OK, ex);
-            }
-
         }
 
         [HttpPost]
-        [Route("~/set/answer")]
-        public HttpResponseMessage setAnswer(GetAnswerModel getanswerMode)
+        [Route("~/set/answerK1")]
+        public GetAnswerModel setAnswerKind1(GetAnswerModel getanswerMode)
         {
             try
             {
@@ -342,31 +382,46 @@ i.DeviceId == management.DeviceId
                 value = authenticationUser(getanswerMode.authenticationUser);
                 if (value.idMessage == (int)MessageCode.OkUser)
                 {
+                    if ((from i in context.Answers where i.answer == getanswerMode.answer.answer select i).FirstOrDefault()!=null)
+                    {
+                        var messageduplicate = Request.CreateResponse(HttpStatusCode.OK, (int)MessageCode.DuplicateData);
+                        return new GetAnswerModel();
+                    }
                     Questions q = context.Questions.Where(c => c.id == getanswerMode.answer.idQuestion).FirstOrDefault();
                     Answers a = new Answers();
                     a.Questions = q;
                     a.answer = getanswerMode.answer.answer;
+                    a.active = getanswerMode.answer.active;
+                    a.kind = 1;
                     context.Answers.Add(a);
                     context.SaveChanges();
+                    ///select Answer id
+                    int answerId =( from i in context.Answers where i.answer == a.answer select i.id).FirstOrDefault();
+                    
+                    
                     var message = Request.CreateResponse(HttpStatusCode.OK, (int)MessageCode.Savedata);
-                    return message;
+                    return new GetAnswerModel();
                 }
                 else
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, value.idMessage.ToString());
+                    //return Request.CreateResponse(HttpStatusCode.OK, value.idMessage.ToString());
+                    return new GetAnswerModel();
+
                 }
 
             }
             catch (Exception ex)
             {
-                return Request.CreateResponse(HttpStatusCode.OK, ex);
+                //return Request.CreateResponse(HttpStatusCode.OK, ex);
+                return new GetAnswerModel();
+
             }
 
         }
 
 
         [HttpPost]
-        [Route("~/update/answer")]
+        [Route("~/update/answerK1")]
         public HttpResponseMessage updateAnswer(GetAnswerModel getanswerMode)
         {
             try
@@ -396,7 +451,7 @@ i.DeviceId == management.DeviceId
         }
 
         [HttpPost]
-        [Route("~/get/countAnswer")]
+        [Route("~/get/countAnswerK1")]
         public HttpResponseMessage getCountAnswer(UsersManagements updateUserMode)
         {
             try
@@ -406,9 +461,9 @@ i.DeviceId == management.DeviceId
                 ClassCount countAnswer = new ClassCount((int)value.idMessage);
                 if (value.idMessage == (int)MessageCode.OkUser)
                 {
-                    int q= (from i in context.Answers where i.active=="t" select i).Count();
+                    int q = (from i in context.Answers where i.active == "t" && i.kind == 1 select i).Count();
                     countAnswer.ToatalCount = q;
-                    return Request.CreateResponse(HttpStatusCode.OK, countAnswer); 
+                    return Request.CreateResponse(HttpStatusCode.OK, countAnswer);
                 }
                 else
                 {
@@ -432,6 +487,27 @@ i.DeviceId == management.DeviceId
         public tests getUserName()
         {
             return new tests("meysam");
+        }
+
+        [HttpPost]
+        [Route("~/get/test")]
+        public resulttest gettest(UsersManagements updateUserMode)
+        {
+                MessageModel value = new MessageModel();
+                value = authenticationUser(updateUserMode);
+                ClassCount countAnswer = new ClassCount((int)value.idMessage);
+                if (value.idMessage == (int)MessageCode.OkUser)
+                {
+                    var s = (from i in context.Answers select i).ToList();
+
+                    resulttest r = new resulttest(value,s);
+                    return r;
+                }
+                else
+                {
+                    resulttest r = new resulttest(value,"");
+                return r;
+                }
         }
         #endregion
 

@@ -217,7 +217,6 @@
     <Compile Include="Models\custom.cs" />
     <Compile Include="Models\GetAnswerModel.cs" />
     <Compile Include="Models\GetQuestionModel.cs" />
-    <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ClassMessages.cs" />
     <Compile Include="Models\tests.cs" />

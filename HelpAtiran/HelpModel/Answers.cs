@@ -17,6 +17,7 @@ namespace HelpModel
         public int id { get; set; }
         public string answer { get; set; }
         public string active { get; set; }
+        public Nullable<byte> kind { get; set; }
     
         public virtual Questions Questions { get; set; }
     }

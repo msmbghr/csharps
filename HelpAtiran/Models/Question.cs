@@ -9,6 +9,6 @@ namespace ClassModels
         public int id { get; set; }
         public string question { get; set; }
         public string active { get; set; }
-
+        public byte? kind { get; set; }
     }
 }

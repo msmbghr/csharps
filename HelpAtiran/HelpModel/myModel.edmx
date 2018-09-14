@@ -4,90 +4,94 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AtiranHelpModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="AtiranHelpModelStoreContainer">
-    <EntitySet Name="Answers" EntityType="AtiranHelpModel.Store.Answers" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="overal_setting" EntityType="AtiranHelpModel.Store.overal_setting" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Questions" EntityType="AtiranHelpModel.Store.Questions" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="UsePermition" EntityType="AtiranHelpModel.Store.UsePermition" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="UsersManagement" EntityType="AtiranHelpModel.Store.UsersManagement" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="FK_Answers_Questions" Association="AtiranHelpModel.Store.FK_Answers_Questions">
-      <End Role="Questions" EntitySet="Questions" />
-      <End Role="Answers" EntitySet="Answers" />
-    </AssociationSet>
-    <AssociationSet Name="FK_UsePermition_UsersManagement" Association="AtiranHelpModel.Store.FK_UsePermition_UsersManagement">
-      <End Role="UsersManagement" EntitySet="UsersManagement" />
-      <End Role="UsePermition" EntitySet="UsePermition" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="Answers">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="answer" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="active" Type="char" Nullable="true" MaxLength="1" />
-    <Property Name="Questions_id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="overal_setting">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="dis" Type="nvarchar" Nullable="true" MaxLength="1000" />
-    <Property Name="value" Type="bigint" Nullable="true" />
-  </EntityType>
-  <EntityType Name="Questions">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="question" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="active" Type="char" Nullable="true" MaxLength="1" />
-  </EntityType>
-  <EntityType Name="UsePermition">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="permitionId" Type="int" Nullable="false" />
-    <Property Name="UsersManagement_id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="UsersManagement">
-    <Key>
-      <PropertyRef Name="id" />
-    </Key>
-    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="username" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="password" Type="nvarchar" Nullable="true" MaxLength="50" />
-    <Property Name="status" Type="int" Nullable="true" />
-    <Property Name="DeviceId" Type="nvarchar" Nullable="true" MaxLength="50" />
-  </EntityType>
-  <Association Name="FK_Answers_Questions">
-    <End Role="Questions" Type="AtiranHelpModel.Store.Questions" Multiplicity="1" />
-    <End Role="Answers" Type="AtiranHelpModel.Store.Answers" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Questions">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="Answers">
-        <PropertyRef Name="Questions_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_UsePermition_UsersManagement">
-    <End Role="UsersManagement" Type="AtiranHelpModel.Store.UsersManagement" Multiplicity="1" />
-    <End Role="UsePermition" Type="AtiranHelpModel.Store.UsePermition" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="UsersManagement">
-        <PropertyRef Name="id" />
-      </Principal>
-      <Dependent Role="UsePermition">
-        <PropertyRef Name="UsersManagement_id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
+    <Schema Namespace="AtiranHelpModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Answers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="answer" Type="nvarchar(max)" />
+          <Property Name="active" Type="char" MaxLength="1" />
+          <Property Name="Questions_id" Type="int" Nullable="false" />
+          <Property Name="kind" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="overal_setting">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dis" Type="nvarchar" MaxLength="1000" />
+          <Property Name="value" Type="bigint" />
+        </EntityType>
+        <EntityType Name="Questions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="question" Type="nvarchar(max)" />
+          <Property Name="active" Type="char" MaxLength="1" />
+          <Property Name="kind" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="UsePermition">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="permitionId" Type="int" Nullable="false" />
+          <Property Name="UsersManagement_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UsersManagement">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" />
+          <Property Name="status" Type="int" />
+          <Property Name="DeviceId" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Answers_Questions">
+          <End Role="Questions" Type="Self.Questions" Multiplicity="1" />
+          <End Role="Answers" Type="Self.Answers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Questions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Answers">
+              <PropertyRef Name="Questions_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsePermition_UsersManagement">
+          <End Role="UsersManagement" Type="Self.UsersManagement" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UsePermition" Type="Self.UsePermition" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UsersManagement">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="UsePermition">
+              <PropertyRef Name="UsersManagement_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AtiranHelpModelStoreContainer">
+          <EntitySet Name="Answers" EntityType="Self.Answers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="overal_setting" EntityType="Self.overal_setting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsePermition" EntityType="Self.UsePermition" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UsersManagement" EntityType="Self.UsersManagement" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Answers_Questions" Association="Self.FK_Answers_Questions">
+            <End Role="Questions" EntitySet="Questions" />
+            <End Role="Answers" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsePermition_UsersManagement" Association="Self.FK_UsePermition_UsersManagement">
+            <End Role="UsersManagement" EntitySet="UsersManagement" />
+            <End Role="UsePermition" EntitySet="UsePermition" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AtiranHelpModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -99,6 +103,7 @@
           <Property Name="answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Questions" Relationship="Self.FK_Answers_Questions" FromRole="Answers" ToRole="Questions" />
+          <Property Name="kind" Type="Byte" />
         </EntityType>
         <EntityType Name="overal_setting">
           <Key>
@@ -116,6 +121,7 @@
           <Property Name="question" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="active" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="Answers" Relationship="Self.FK_Answers_Questions" FromRole="Questions" ToRole="Answers" />
+          <Property Name="kind" Type="Byte" />
         </EntityType>
         <EntityType Name="UsePermition">
           <Key>
@@ -168,7 +174,8 @@
     <EntitySetMapping Name="Answers">
       <EntityTypeMapping TypeName="IsTypeOf(AtiranHelpModel.Answers)">
         <MappingFragment StoreEntitySet="Answers">
-          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="kind" ColumnName="kind" />
+                <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="answer" ColumnName="answer" />
           <ScalarProperty Name="active" ColumnName="active" />
         </MappingFragment>
@@ -186,7 +193,8 @@
     <EntitySetMapping Name="Questions">
       <EntityTypeMapping TypeName="IsTypeOf(AtiranHelpModel.Questions)">
         <MappingFragment StoreEntitySet="Questions">
-          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="kind" ColumnName="kind" />
+                <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="question" ColumnName="question" />
           <ScalarProperty Name="active" ColumnName="active" />
         </MappingFragment>
