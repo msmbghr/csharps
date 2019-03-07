@@ -1,5 +1,0 @@
-D:\ProjectVisualStudio\RibbonWinForms-5.0.0.1\RibbonWinForms-5.0.0.1\src\System.Windows.Forms.Ribbon\bin\Debug\System.Windows.Forms.Ribbon.dll
-D:\ProjectVisualStudio\RibbonWinForms-5.0.0.1\RibbonWinForms-5.0.0.1\src\System.Windows.Forms.Ribbon\bin\Debug\System.Windows.Forms.Ribbon.pdb
-D:\ProjectVisualStudio\RibbonWinForms-5.0.0.1\RibbonWinForms-5.0.0.1\src\System.Windows.Forms.Ribbon\obj\Debug\System.Windows.Forms.Ribbon.csprojResolveAssemblyReference.cache
-D:\ProjectVisualStudio\RibbonWinForms-5.0.0.1\RibbonWinForms-5.0.0.1\src\System.Windows.Forms.Ribbon\obj\Debug\System.Windows.Forms.Ribbon.dll
-D:\ProjectVisualStudio\RibbonWinForms-5.0.0.1\RibbonWinForms-5.0.0.1\src\System.Windows.Forms.Ribbon\obj\Debug\System.Windows.Forms.Ribbon.pdb
